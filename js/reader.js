@@ -13,7 +13,7 @@
         $("#menu_left").addClass("show");
         $("#menu_right").addClass("show");
         
-        $("#scroll_left").addClass("fontText sizeB size100");
+        $("#scroll_left").addClass("fontMenu sizeB size100");
         $("#scroll_right").addClass("fontMenu sizeB size100");
         
         // Reset view, Reload bug on FF?
