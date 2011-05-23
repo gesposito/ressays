@@ -342,8 +342,8 @@
             } else {
                 $("body").children("#note").fadeOut().remove();
             }*/
+            return;
         }
-        return;
     }
 
     
