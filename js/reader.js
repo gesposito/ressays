@@ -37,6 +37,8 @@
             get.other(url);
         }
 
+        $("div#scroll_left").addClass("show");
+        $("div#scroll_right").addClass("show");
         $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
         evt.preventDefault();
     });
