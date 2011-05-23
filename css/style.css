@@ -2,17 +2,16 @@
  * Gianluca Esposito tilt2k@gmail.com
  * If you find this tool useful please donate at the address above, it'll help to start a start-up!
  */
-div#main { margin:0 auto; width:64em; height:64em; }
+div#main { margin:0 auto; width:56em; height:64em; }
 
 div#menu_left, div#menu_right { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
 div#menu_left.show, div#menu_right.show { visibility:visible; }
 div#menu_left:hover, div#menu_right:hover { z-index:1; overflow:visible; }
-div#menu_left { margin-left:8em; }
-div#menu_right { margin-right:8em; }
+div#menu_left { margin-left:4em; }
+div#menu_right { margin-right:4em; }
 
-div#scroll_left, div#scroll_right { position:relative; width:8em; height:62em; float:left; overflow:hidden; visibility:hidden; }
-div#scroll_left.show, div#scroll_right.show { visibility:visible; }
-div#scroll_left:hover, div#scroll_right:hover { background-color:#F6F6F6; }
+div#scroll_left, div#scroll_right { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
+div#scroll_left.show, div#scroll_right.show { visibility:visible; cursor:pointer; }
 
 div#reader { position:relative; width:48em; height:62em; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
 div#reader:before { position:absolute; top:0; right:0; bottom:0; left:0;
@@ -22,10 +21,10 @@ div#source { position:relative; width:40em; min-height:54em; margin:4em; }
 div#source.col { height:54em; overflow:hidden; -moz-column-width: 48em; -moz-column-gap:0; -webkit-column-width: 48em; -webkit-column-gap:0; }
 div#source h1 { padding:0 0 0.5em; font-size:1.6em; font-weight:700; color:#993333; }
 div#source h1 a:link, div#source h1 a:visited, div#source h1 a:hover, div#source h1 a:active { color:#000; }
-div#source h2 { padding: 0.5em 0; font-size:1.2em; font-weight:700; color:#000; }
+div#source h2 { padding:0.5em 0; font-size:1.2em; font-weight:700; color:#000; }
 div#source h2 a:link, div#source h2 a:visited, div#source h2 a:hover, div#source h2 a:active { color:#000; }
-div#source h3 { padding: 0.5em 0; font-size:1.0em; font-weight:700; color:#000; }
-div#source p { padding: 0.5em 0; font-size: 1.0em; line-height: 1.5em; font-weight:400; }
+div#source h3 { padding:0.5em 0; font-size:1.0em; font-weight:700; color:#000; }
+div#source p { padding:0.5em 0; font-size: 1.0em; line-height: 1.5em; font-weight:400; }
 div#source pre p, div#source em { font-size: 0.9em; line-height: 1.2em; font-weight:400; font-style:italic; padding:0.5em 0; }
 div#source p.info { width:38em; padding:0.5em 1em; font-weight:400; }
 div#source p.yc { background-color:#FF9922; }
@@ -60,13 +59,13 @@ div#option li a:link:before, div#option li a:visited:before, div#option li a:hov
 { position:absolute; top:0; right:0; bottom:0; left:0;
   content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
 
-.fontMenu { font-family: 'Metrophobic', serif; font-style: normal; text-shadow: none;
-  text-decoration: none; text-transform: none; letter-spacing: 0em; word-spacing: 0em; }
+.fontMenu { font-family:'Metrophobic', serif; font-style:normal; text-shadow:none;
+  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; }
 /* Bugged on IE */
-.fontText { font-family: 'Merriweather', serif; font-style: normal; text-shadow: none;
-  text-decoration: none; text-transform: none; letter-spacing: 0em; word-spacing: 0em; }
-.size09 { font-size: 0.9em; line-height: 1.2em; }
-.size11 { font-size: 1.1em; line-height: 1.6em; }
-.size100 { font-size: 1em; text-align:center; }
+.fontText { font-family:'Merriweather', serif; font-style:normal; text-shadow:none;
+  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; }
+.size09 { font-size:0.9em; line-height:1.2em; }
+.size11 { font-size:1.1em; line-height:1.6em; }
+.size70 { font-size:7em; line-height:8em; color:#C4C4C4; }
 .sizeB { font-weight:700; }
-.center { text-align:center; }
+.center { text-align:center; } .right { text-align:right; } .left { text-align:left; }

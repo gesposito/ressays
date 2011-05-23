@@ -13,8 +13,8 @@
         $("#menu_left").addClass("show");
         $("#menu_right").addClass("show");
         
-        $("#scroll_left").addClass("fontMenu sizeB size100");
-        $("#scroll_right").addClass("fontMenu sizeB size100");
+        $("#scroll_left").addClass("size70 center").html("&#8249;");
+        $("#scroll_right").addClass("size70 center").html("&#8250;");
         
         // Reset view, Reload bug on FF?
         $("#source").scrollLeft(0); 
@@ -95,23 +95,19 @@
         }
     });
     $("div#scroll_left, div#scroll_right").live('click', function(evt) {
-        var left, size, option = $(this).text();
+        var left, size, $this = $(this).attr("id"); option = ($this.indexOf("left") != -1) ? "<" : ">";
         left = $("#source").scrollLeft();
         size = $("#source").innerWidth();
-                
+        evt.preventDefault();
         switch (option) {
             case "<":
                 size = -size;
                 $("#source").scrollLeft(left + size);
-                evt.preventDefault();
             break;
             case ">":
-
                 $("#source").scrollLeft(left + size);
-                evt.preventDefault();
             break;
             default:
-                evt.preventDefault();
             break;
         }
     });
