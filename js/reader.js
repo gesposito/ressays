@@ -499,6 +499,4 @@
             $menu: $("div#list")
         }
     }
-
->>>>>>> 6401bb8b385f5cdcff5633a5de9376e00e73a74a
 })( jQuery );
