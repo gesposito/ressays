@@ -37,7 +37,7 @@
             get.other(url);
         }
 
-        //$("iframe#loader").attr('src', url); ENABLE LATER // Load paulgraham.com to hit impression
+        $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
         evt.preventDefault();
     });
     $("div#list a.menuNav").live('click', function(evt) {
@@ -113,10 +113,14 @@
             break;
         }
     });
-    $(".noteLink").live('click', function(evt) {
-        // Notes hover
-        console.log("note")
-        evt.preventDefault();
+    $("div#source a.noteLink").live("mouseover mouseout", function(evt) {
+        if ( evt.type == "mouseover" ) {
+            console.log("note")
+            var number = $(this).text;
+            reader.note(number, evt.pageX, evt.pageY);
+        } else {
+            reader.note();
+        }
     });
     
     // Cross-Origin Resource Sharing workarounds
@@ -322,11 +326,24 @@
         },
         spinner: function(toggle) {
             if (toggle == "on") {
-                $("#reader").append($("<div>", {id: "spinner"}));
+                $("body").append($("<div>", {id: "spinner"}));
             } else {
-                $("#reader").children("#spinner").fadeOut().remove();
+                $("body").children("#spinner").fadeOut().remove();
             }
+        },
+        note: function(note) {
+            // Incomplete
+            /*if (note) {
+                var note = "(" + note.toString() + ")";
+                var $note = $("h2:contains(Notes)");
+                $note = $note.nextUntil("p:contains('(3)')");
+                var noteText = $note.html();
+                $("body").append($("<div>", {id: "note", "class": "fontText", html: noteText}));
+            } else {
+                $("body").children("#note").fadeOut().remove();
+            }*/
         }
+        return;
     }
 
     
