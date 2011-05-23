@@ -13,8 +13,8 @@
         $("#menu_left").addClass("show");
         $("#menu_right").addClass("show");
         
-        $("#scroll_left").addClass("show fontText sizeB size100");
-        $("#scroll_right").addClass("show fontMenu sizeB size100");
+        $("#scroll_left").addClass("fontMenu sizeB size100");
+        $("#scroll_right").addClass("fontMenu sizeB size100");
         
         // Reset view, Reload bug on FF?
         $("#source").scrollLeft(0); 
@@ -37,6 +37,8 @@
             get.other(url);
         }
 
+        $("div#scroll_left").addClass("show");
+        $("div#scroll_right").addClass("show");
         $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
         evt.preventDefault();
     });
