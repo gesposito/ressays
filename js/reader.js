@@ -144,7 +144,7 @@
                 dataType: format,
                 timeout: setting.timeout,
                 success: function(data) { menu.build(data); },
-                error: function() { get.rss(settings.alt); } // Fallback to local stored feed
+                error: function() { menu.build(); /*get.rss(settings.alt);*/ return; } // Avoid loops on GitHub
             });
         },
         html: function(setting) {
@@ -356,22 +356,24 @@
                     html: "Essays:", href: "#", title: ""
                 })
             );
-
-            $(data).find("item").each(function() {
-                var xmlItem = $(this);
-                var xmlTitle = $(xmlItem).find("title").text();
-                var xmlLink = $(xmlItem).find("link").text();
-                $("div#list .menuList").append(
-                    menu.add({
-                        _class: "menuItem fontMenu size09 sizeB",
-                        html: xmlTitle, //item.index + ". " + item.title,
-                        href: xmlLink,
-                        title: "" //item.title
-                    })
-                );
-                    //= menu.list($list, {title: , link: });
-            });
-
+            
+            if (data) {
+                $(data).find("item").each(function() {
+                    var xmlItem = $(this);
+                    var xmlTitle = $(xmlItem).find("title").text();
+                    var xmlLink = $(xmlItem).find("link").text();
+                    $("div#list .menuList").append(
+                        menu.add({
+                            _class: "menuItem fontMenu size09 sizeB",
+                            html: xmlTitle, //item.index + ". " + item.title,
+                            href: xmlLink,
+                            title: "" //item.title
+                        })
+                    );
+                        //= menu.list($list, {title: , link: });
+                });
+            }
+            
             $("div#list .menuNext").append(
                 menu.add({
                     _class: "menuNav fontMenu size09 sizeB",
