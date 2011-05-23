@@ -1,0 +1,71 @@
+/* 
+ * Gianluca Esposito tilt2k@gmail.com
+ * If you find this tool useful please donate at the address above, it'll help to start a start-up!
+ */
+div#main { margin:0 auto; width:64em; height:64em; }
+
+div#menu_left, div#menu_right { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
+div#menu_left.show, div#menu_right.show { visibility:visible; }
+div#menu_left:hover, div#menu_right:hover { z-index:1; overflow:visible; }
+div#menu_left { margin-left:8em; }
+div#menu_right { margin-right:8em; }
+
+div#scroll_left, div#scroll_right { position:relative; width:8em; height:62em; float:left; overflow:hidden; visibility:hidden; }
+div#scroll_left.show, div#scroll_right.show { visibility:visible; }
+div#scroll_left:hover, div#scroll_right:hover { background-color:#F6F6F6; }
+
+div#reader { position:relative; width:48em; height:62em; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
+div#reader:before { position:absolute; top:0; right:0; bottom:0; left:0;
+  content: ""; border:1px solid #EAEAEA; z-index: -1; }
+
+div#source { position:relative; width:40em; min-height:54em; margin:4em; }
+div#source.col { height:54em; overflow:hidden; -moz-column-width: 48em; -moz-column-gap:0; -webkit-column-width: 48em; -webkit-column-gap:0; }
+div#source h1 { padding:0 0 0.5em; font-size:1.6em; font-weight:700; color:#993333; }
+div#source h1 a:link, div#source h1 a:visited, div#source h1 a:hover, div#source h1 a:active { color:#000; }
+div#source h2 { padding: 0.5em 0; font-size:1.2em; font-weight:700; color:#000; }
+div#source h2 a:link, div#source h2 a:visited, div#source h2 a:hover, div#source h2 a:active { color:#000; }
+div#source h3 { padding: 0.5em 0; font-size:1.0em; font-weight:700; color:#000; }
+div#source p { padding: 0.5em 0; font-size: 1.0em; line-height: 1.5em; font-weight:400; }
+div#source pre p, div#source em { font-size: 0.9em; line-height: 1.2em; font-weight:400; font-style:italic; padding:0.5em 0; }
+div#source p.info { width:38em; padding:0.5em 1em; font-weight:400; }
+div#source p.yc { background-color:#FF9922; }
+div#source p.quote { background-color:#FFFFDD; }
+div#source p.ext { background-color:#CCCC99; }
+div#source a, div#home a { color:darkblue; }
+div#source a.noteLink, div#source a.noteText { vertical-align:super; }
+
+div#home { visibility:hidden; }
+div#home.show { visibility:visible; }
+
+div#spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
+
+div#list, div#option { position:relative; } /* background-color: #EAEAEA; */
+div#list .menuHome, div#list .menuNext, div#list .menuPrev, div#option menuSetting { position:relative; width:24em; height:2em; float:left; clear:both; }
+div#list .menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
+/* div#list .menuList li { list-style: decimal inside none; }*/ 
+div#list li { position:relative; width:24em; height:2em; background-color:#666699; }
+div#list .menuList li:hover { width:auto; z-index:1; overflow:visible; }
+div#list .menuHome li, div#list .menuNext li, div#list .menuPrev li, div#option li { background-color:#666777; }
+
+div#list li a:link, div#list li a:visited,
+div#option li a:link, div#option li a:visited
+{ display:block; width:23em; height:1.2em; padding:0.5em 1em;
+  color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+div#list li a.menuNav:link, div#list li a.menuNav:visited { width:24em; }
+div#list li a:hover, div#list li a:active
+{ display:block; width:auto; padding-right:1em; }
+div#list li a:link:before, div#list li a:visited:before, div#list li a:hover:before, div#list li a:active:before,
+div#option li a:link:before, div#option li a:visited:before, div#option li a:hover:before, div#option li a:active:before
+{ position:absolute; top:0; right:0; bottom:0; left:0;
+  content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
+
+.fontMenu { font-family: 'Metrophobic', serif; font-style: normal; text-shadow: none;
+  text-decoration: none; text-transform: none; letter-spacing: 0em; word-spacing: 0em; }
+/* Bugged on IE */
+.fontText { font-family: 'Merriweather', serif; font-style: normal; text-shadow: none;
+  text-decoration: none; text-transform: none; letter-spacing: 0em; word-spacing: 0em; }
+.size09 { font-size: 0.9em; line-height: 1.2em; }
+.size11 { font-size: 1.1em; line-height: 1.6em; }
+.size100 { font-size: 1em; text-align:center; }
+.sizeB { font-weight:700; }
+.center { text-align:center; }
