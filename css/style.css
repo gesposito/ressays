@@ -38,6 +38,7 @@ div#home { visibility:hidden; }
 div#home.show { visibility:visible; }
 
 div#spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
+div#note { position:fixed; top:25%; left:25%; min-width:10em; min-height:10em; padding:1em; background-color:#FFF; }
 
 div#list, div#option { position:relative; } /* background-color: #EAEAEA; */
 div#list .menuHome, div#list .menuNext, div#list .menuPrev, div#option menuSetting { position:relative; width:24em; height:2em; float:left; clear:both; }
