@@ -339,7 +339,6 @@
                     html: "Show Notes", href: "#", title: "", handler: "showNotes"
                 })
             );*/
-            
             // Add: Full view
             // Add: Notes
         },
