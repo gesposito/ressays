@@ -319,7 +319,6 @@
         },
         option: function() {
             // Bugged selector/event
-            
             $("ul.menuSetting").append(
                 menu.add({
                     _class: "menuOption fontMenu size09 sizeB",
