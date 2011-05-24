@@ -332,7 +332,7 @@
                     html: "Full View", href: "#", title: "", handler: "fullView"
                 })
             );
-            
+
             /*$("ul.menuSetting").append(
                 menu.add({
                     _class: "menuOption fontMenu size09 sizeB",
