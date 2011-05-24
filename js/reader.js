@@ -289,7 +289,7 @@
             $("ul.menuPrev").append(
                 menu.add({
                     _class: "menuNav fontMenu size09 sizeB",
-                    html: "Essays:", href: "#", title: "", handler: "menuPrev"
+                    html: "Essays: ", href: "#", title: "", handler: "menuPrev"
                 })
             );
             $("ul.menuNext").append(
@@ -322,7 +322,7 @@
             $("ul.menuSetting").append(
                 menu.add({
                     _class: "menuOption fontMenu size09 sizeB",
-                    html: "Settings:", href: "#", title: ""
+                    html: "Settings: ", href: "#", title: ""
                 })
             );
             $("ul.menuSetting").append(
@@ -420,7 +420,7 @@
                     $("ul.menuNext a").text("Older");
                     $element.data('itemOffset', menuOffset);
                 } else {
-                    $("ul.menuPrev a").text("Essays:");
+                    $("ul.menuPrev a").text("Essays: ");
                 }
             }
             $element.scrollTop(menuOffset * menuVisible);
