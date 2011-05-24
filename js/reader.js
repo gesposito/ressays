@@ -17,81 +17,26 @@
         $("#scroll_right").addClass("size70 center").html("&#8250;");
         
         // Reset view, Reload bug on FF?
-        $("#source").scrollLeft(0); 
+        $("div#source").scrollLeft(0); 
         
         // Menu builder
         get.xml(settings.rss);
-        option.build();
+        menu.option();
     });
     
-    $("div#list a.menuItem").live('click', function(evt) {
-        $("#home").removeClass("show");
-        reader.spinner('on');
-        
-        var url = $(this).attr('href');
-        if (url.search(/htm/i) != -1) {
-            get.html(url);
-        } else {
-            url = url.replace(/http:\/\/www.paulgraham.com\//, ''); // Fixes RSS feed
-            get.other(url);
-        }
-
-        $("div#scroll_left").addClass("show");
-        $("div#scroll_right").addClass("show");
-        $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
-        evt.preventDefault();
-    });
-    $("div#list a.menuNav").live('click', function(evt) {
-        var $element = $("div#list .menuList");
-        
-        evt.preventDefault();
-        switch ($(this).parents("ul").attr('class')) {
-            case "menuNext":
-                nav.scroll($element, "Next");
-                break;
-            case "menuPrev":
-                nav.scroll($element, "Prev");
-                break;
-            default:
-                break;
-        }
-    });
-    $("div#option a.menuOption").live('click', function(evt) {
-        // Bugged selector?
-        var option = $(this).text();
-        
-        evt.preventDefault();
-        switch (option) {
-            case "Full View":
-                // Add: toggle
-                $("div#main").css("height", "auto");
-
-                $("div#scroll_left").removeClass("show");
-                $("div#scroll_right").removeClass("show");
-
-                $("div#reader").css("height", "auto");
-
-                $("div#source").removeClass("col");
-            break;
-            case "Notes":
-            break;
-            default:
-            break;
-        }
-    });
     $("div#scroll_left, div#scroll_right").live('click', function(evt) {
-        var left, size, $this = $(this).attr("id"); option = ($this.indexOf("left") != -1) ? "<" : ">";
-        left = $("#source").scrollLeft();
-        size = $("#source").innerWidth();
         evt.preventDefault();
+        
+        var left = $("div#source").scrollLeft(), size = $("div#source").innerWidth(), $this = $(this).attr("id"); 
+        var option = ($this.indexOf("left") != -1) ? "<" : ">";
         
         switch (option) {
             case "<":
                 size = -size;
-                $("#source").scrollLeft(left + size);
+                $("div#source").scrollLeft(left + size);
             break;
             case ">":
-                $("#source").scrollLeft(left + size);
+                $("div#source").scrollLeft(left + size);
             break;
             default:
             break;
@@ -118,7 +63,7 @@
                 data: "q=select%20*%20from%20rss%20where%20url%3D%22" + encodeURIComponent(setting.url) + "%22",
                 dataType: setting.format,
                 timeout: setting.timeout,
-                success: function(data) { menu.build(data); },
+                success: function(data) { menu.list(data); },
                 error: function() { get.rss(settings.alt); } // Fallback to local stored feed
             });
         },
@@ -129,8 +74,8 @@
                 data: setting.data,
                 dataType: format,
                 timeout: setting.timeout,
-                success: function(data) { menu.build(data); },
-                error: function() { menu.build(); /*get.rss(settings.alt);*/ } // Build anyway, avoid loops on GitHub
+                success: function(data) { menu.list(data); },
+                error: function() { menu.list(); /*get.rss(settings.alt);*/ } // Build anyway, avoid loops on GitHub
             });
         },
         html: function(setting) {
@@ -160,7 +105,7 @@
         build: function(data) {      
             data = reader.parse(data);
             
-            var $this = $("#source");
+            var $this = $("div#source");
             $this.scrollLeft(0); // Reset view
             $this.html(data);
             
@@ -169,11 +114,11 @@
                 var content = $(this).html();
                 return $.trim(content);
             }); 
-            $("#source p:empty").remove(); // Clean empty Paragraphs
+            $("div#source p:empty").remove(); // Clean empty Paragraphs
             
             // Style dates
             $("h1, p:first").next("p").filter(':contains("January"),:contains("February"),:contains("March"),:contains("April"),:contains("May"),:contains("June"),:contains("July"),:contains("August"),:contains("September"),:contains("October"),:contains("November"),:contains("December")')
-                    .each(function () {
+                    .each(function() {
                         var content = $(this).html();
                         $(this).wrap($("<h3>").addClass("fontMenu"))
                                 .replaceWith(content);
@@ -198,7 +143,7 @@
             
             // Convert image titles to H1
             // <img hspace="0" height="18" width="126" vspace="0" border="0" alt="*" src="http://ep.yimg.com/ca/I/paulgraham*">
-            $parse.find('img[src*="http://ep.yimg.com/ca/I/paulgraham"]').each(function () {
+            $parse.find('img[src*="http://ep.yimg.com/ca/I/paulgraham"]').each(function() {
                 var content = $(this).attr('alt');
                 $(this).wrap($("<h1>").addClass("fontMenu"))
                         .replaceWith(content);
@@ -210,7 +155,7 @@
             });
             
             // Fixes local links
-            $parse.find("a:not(:contains('http'))").each(function (i) {
+            $parse.find("a:not(:contains('http'))").each(function() {
                 var content = "http://www.paulgraham.com/" + $(this).attr('href'); 
                 $(this).attr('href', content);
             })
@@ -292,7 +237,7 @@
             return parse;
         },
         display: function(data) {
-            var $this = $("#source");
+            var $this = $("div#source");
             $this.scrollLeft(0); // Reset view
             
             // Different format:
@@ -305,7 +250,7 @@
             reader.spinner('off');
         },
         paginate: function() {
-            var $this = $("#source");
+            var $this = $("div#source");
 
             $this.removeClass("col");
             var totalHeight = $this.height(); // Bugged on first build?
@@ -337,43 +282,63 @@
             return;
         }
     }
-
     
     // #list builder
     var menu = {
-        build: function(data) {
-            $("div#list .menuHome").append(
+        list: function(data) {
+            $("ul.menuPrev").append(
                 menu.add({
                     _class: "menuNav fontMenu size09 sizeB",
-                    html: "Essays:", href: "#", title: ""
+                    html: "Essays:", href: "#", title: "", handler: "menuPrev"
                 })
             );
-            
+            $("ul.menuNext").append(
+                menu.add({
+                    _class: "menuNav fontMenu size09 sizeB",
+                    html: "Older", href: "#", title: "", handler: "menuNext"
+                })
+            );
+
             if (data) {
                 $(data).find("item").each(function() {
                     var xmlItem = $(this);
                     var xmlTitle = $(xmlItem).find("title").text();
                     var xmlLink = $(xmlItem).find("link").text();
-                    $("div#list .menuList").append(
+                    $("ol.menuList").append(
                         menu.add({
                             _class: "menuItem fontMenu size09 sizeB", html: xmlTitle,
-                            href: xmlLink, title: ""
+                            href: xmlLink, title: "", handler: "openLink"
                         })
                     );
                 });
-            }
+            }            
+            nav.size($("ol.menuList")); // menuList .data()
+            menu.index(); // menuList numbering
             
-            $("div#list .menuNext").append(
+            $("ol.menuList").scrollTop(0); // Reset view
+        },
+        option: function() {
+            $("ul.menuSetting").append(
                 menu.add({
-                    _class: "menuNav fontMenu size09 sizeB",
-                    html: "Older", href: "#", title: ""
+                    _class: "menuOption fontMenu size09 sizeB",
+                    html: "Settings:", href: "#", title: ""
+                })
+            );
+            $("ul.menuSetting").append(
+                menu.add({
+                    _class: "menuOption fontMenu size09 sizeB",
+                    html: "Full View", href: "#", title: "", handler: "fullView"
+                })
+            );
+            $("ul.menuSetting").append(
+                menu.add({
+                    _class: "menuOption fontMenu size09 sizeB",
+                    html: "Show Notes", href: "#", title: "", handler: "showNotes"
                 })
             );
             
-            nav.size($("div#list .menuList")); // menuList .data()
-            menu.index(); // menuList numbering
-            
-            $("div#list .menuList").scrollTop(0); // Reset view
+            // Add: Full view
+            // Add: Notes
         },
         add: function(element) {
             if (element) {
@@ -381,7 +346,7 @@
                             $("<a>", {
                                 "class": element._class, html: element.html,
                                 href: element.href, title: element.title
-                            })
+                            }).bind("click", {handler: element.handler, link: element.href}, menu.event)
                         );
             } else {
                 return $("<li>").append(
@@ -391,78 +356,106 @@
                         );
             }
         },
-        index: function () {
+        index: function() {
             // menuList numbering
-            var i = $("div#list .menuList").data('itemCount');
-            $("div#list .menuList li a").each(function () {
+            var i = $("ol.menuList").data('itemCount');
+            $("ol.menuList a").each(function() {
                 var content = $(this).html();
                 $(this).html(i + ". " + content);
                 i--;
             })
             return;
+        }, 
+        event: function(evt) {
+            evt.preventDefault();
+
+            switch (evt.data.handler) {
+                case "menuPrev":
+                    nav.scroll("Prev");
+                    break;
+                case "menuNext":
+                    nav.scroll("Next");
+                    break;
+                case "openLink":
+                    nav.link(evt.data.link);
+                    break;
+                case "fullView":
+                    nav.full();
+                    break;
+                case "showNotes":
+                    nav.note(); 
+                    break;
+                default:
+                    break;
+            }
         }
     }
-
-    var option = {
-        build: function() {
-            var $this = $("div#option .menuSetting");
-
-            $this.append(
-                menu.add({
-                    _class: "menuOption fontMenu size09 sizeB",
-                    html: "Settings:", href: "#", title: ""
-                })
-            );
-            $this.append(
-                menu.add({
-                    _class: "menuOption fontMenu size09 sizeB",
-                    html: "Full View", href: "#", title: ""
-                })
-            );
-            // Add: Full view
-            // Add: Notes
-        }
-    }
-
+    
     var nav = {
         size: function($element) {
             // retrieve Menu infos
-            var itemSize = $(".menuHome").innerHeight();
+            var itemSize = $("ul.menuPrev").innerHeight();
             $element.data('itemSize', itemSize);
             var itemCount = 0;
             $(".menuItem").each(function() {itemCount++;});
             $element.data('itemCount', itemCount);
-
-            $element.data('itemOffset', 0);
         },
-        scroll: function($element, dir) {
+        scroll: function(dir) {
             // menuList scrolling
+            var $element = $("ol.menuList");
             var menuVisible = $element.innerHeight();
             var menuSize = parseInt($element.data('itemCount') / (menuVisible / $element.data('itemSize')), 10);
             var menuOffset = $element.data('itemOffset') ? $element.data('itemOffset') : 0;
 
             if (dir == "Next") {
-                $(".menuHome li a").text("Newer");
-                $("div#list ul.menuHome").toggleClass("menuHome menuPrev");
-                ++menuOffset;
-                if (menuOffset >= menuSize) {
-                    $("div#list ul.menuNext").toggleClass("menuHome menuNext");
-                    $(".menuHome li a").text("");
+                if (++menuOffset < menuSize) {
+                    $("ul.menuPrev a").html("Newer");
+                    $element.data('itemOffset', menuOffset);
+                } else {
+                    $("ul.menuNext li a").html("");
                 }
             } else {
-                if (menuOffset >= menuSize) {
-                    $("div#list ul.menuHome").toggleClass("menuHome menuNext");
-                    $(".menuNext li a").text("Older");
+                if (--menuOffset > 0) {
+                    $("ul.menuNext a").text("Older");
+                    $element.data('itemOffset', menuOffset);
+                } else {
+                    $("ul.menuPrev a").text("Essays:");
                 }
-                --menuOffset;
-                if (!menuOffset) {
-                    $("div#list ul.menuPrev").toggleClass("menuHome menuPrev");
-                    $(".menuHome li a").text("Essays:");
-                } 
+            }
+            $element.scrollTop(menuOffset * menuVisible);
+        },
+        link: function(url) {
+            $("#home").removeClass("show");
+            reader.spinner('on');
+
+            if (url.search(/htm/i) != -1) {
+                get.html(url);
+            } else {
+                url = url.replace(/http:\/\/www.paulgraham.com\//, ''); // Fixes RSS feed
+                get.other(url);
             }
 
-            $("div#list .menuList").scrollTop(menuOffset * menuVisible);
-            $element.data('itemOffset', menuOffset);
+            $("div#scroll_left").addClass("show");
+            $("div#scroll_right").addClass("show");
+            $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
+        },
+        full: function() {
+            // Bugged selector?
+            // Add: toggle
+            $("div#main").css("height", "auto");
+
+            $("div#scroll_left").removeClass("show");
+            $("div#scroll_right").removeClass("show");
+
+            $("div#reader").css("height", "auto");
+
+            $("div#source").removeClass("col");
+            
+            console.log("full")
+        },
+        note: function() {
+            // incomplete
+            console.log("notes")
         }
     }
     
