@@ -318,6 +318,8 @@
             $("ol.menuList").scrollTop(0); // Reset view
         },
         option: function() {
+            // Bugged selector/event
+            
             $("ul.menuSetting").append(
                 menu.add({
                     _class: "menuOption fontMenu size09 sizeB",
@@ -330,12 +332,13 @@
                     html: "Full View", href: "#", title: "", handler: "fullView"
                 })
             );
-            $("ul.menuSetting").append(
+            
+            /*$("ul.menuSetting").append(
                 menu.add({
                     _class: "menuOption fontMenu size09 sizeB",
                     html: "Show Notes", href: "#", title: "", handler: "showNotes"
                 })
-            );
+            );*/
             
             // Add: Full view
             // Add: Notes
