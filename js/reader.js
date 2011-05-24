@@ -62,7 +62,6 @@
     $("div#option a.menuOption").live('click', function(evt) {
         // Bugged selector?
         var left, size, option = $(this).text();
-        console.log(option);
         
         switch (option) {
             case "Next Page":
@@ -112,13 +111,15 @@
         }
     });
     $("div#source a.noteLink").live("mouseover mouseout", function(evt) {
-        if ( evt.type == "mouseover" ) {
+        // Incomplete
+        /*if ( evt.type == "mouseover" ) {
             console.log("note")
             var number = $(this).text;
             reader.note(number, evt.pageX, evt.pageY);
         } else {
             reader.note();
-        }
+        }*/
+        return;
     });
     
     // Cross-Origin Resource Sharing workarounds
@@ -206,6 +207,7 @@
             // 16. 15. 13. bugged td bgcolor="#FFFFDD" table width="410"
             // 104. td bgcolor="#cccc99 2xtable bugged
             // essay image header bugged
+            // local links (no http://) are broken
 
             // Avoiding virtumundo.com Loading times, Open rate tracker?
             $parse.find('img[src*="http://www.virtumundo.com/"]').remove();
@@ -222,6 +224,12 @@
             $parse.find('p').each(function() {
                 $(this).contents().unwrap();
             });
+            
+            // Fixes local links
+            $parse.find("a:not(:contains('http'))").each(function (i) {
+                var content = "http://www.paulgraham.com/" + $(this).attr('href'); 
+                $(this).attr('href', content);
+            })
             
             // Notes
             $parse.find('font[color*="999999"] a').each(function(i) {
