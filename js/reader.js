@@ -8,13 +8,13 @@
         // Display home content
         $("iframe#loader").hide();
         
-        $("#home").addClass("show");
+        $("div#home").addClass("show");
 
-        $("#menu_left").addClass("show");
-        $("#menu_right").addClass("show");
+        $("div#menu_left").addClass("show");
+        $("div#menu_right").addClass("show");
         
-        $("#scroll_left").addClass("size70 center").html("&#8249;");
-        $("#scroll_right").addClass("size70 center").html("&#8250;");
+        $("div#scroll_left").addClass("size70 center").html("&#8249;");
+        $("div#scroll_right").addClass("size70 center").html("&#8250;");
         
         // Reset view, Reload bug on FF?
         $("div#source").scrollLeft(0); 
@@ -86,7 +86,8 @@
                 data: "q=select%20table%20from%20html%20where%20url%3D%22" + encodeURIComponent(setting) + "%22&format=xml&callback=?",
                 // Yahoo! Query Language: select * from html where url="" & format=xml
                 dataType: 'json',
-                success: function(data) { reader.build(data); }
+                success: function(data) { reader.build(data); },
+                error: function() { return; } // add error handling
             });
         },
         other: function(setting) {
@@ -95,7 +96,8 @@
                 url: "http://query.yahooapis.com/v1/public/yql",
                 data: "q=select%20*%20from%20html%20where%20url%3D%22" + encodeURIComponent(setting)+ "%22&format=json&callback=?",
                 dataType: 'json',
-                success: function(data) { reader.display(data); }
+                success: function(data) { reader.display(data); },
+                error: function() { return; } // add error handling
             });
         }
     }
@@ -265,7 +267,7 @@
             if (toggle == "on") {
                 $("body").append($("<div>", {id: "spinner"}));
             } else {
-                $("body").children("#spinner").fadeOut().remove();
+                $("body").children("div#spinner").fadeOut().remove();
             }
         },
         note: function(note) {
@@ -426,7 +428,7 @@
             $element.scrollTop(menuOffset * menuVisible);
         },
         link: function(url) {
-            $("#home").removeClass("show");
+            $("div#home").removeClass("show");
             reader.spinner('on');
 
             if (url.search(/htm/i) != -1) {
@@ -444,14 +446,12 @@
             // Bugged selector?
             // Add: toggle
             $("div#main").css("height", "auto");
-
+            $("div#reader").css("height", "auto");
+            $("div#source").removeClass("col");
+            
             $("div#scroll_left").removeClass("show");
             $("div#scroll_right").removeClass("show");
 
-            $("div#reader").css("height", "auto");
-
-            $("div#source").removeClass("col");
-            
             console.log("full")
         },
         note: function() {
