@@ -29,7 +29,6 @@
         reader.spinner('on');
         
         var url = $(this).attr('href');
-        // txt select * from html where url="http://lib.store.yahoo.net/lib/paulgraham/acl1.txt"
         if (url.search(/htm/i) != -1) {
             get.html(url);
         } else {
@@ -45,40 +44,26 @@
     $("div#list a.menuNav").live('click', function(evt) {
         var $element = $("div#list .menuList");
         
+        evt.preventDefault();
         switch ($(this).parents("ul").attr('class')) {
             case "menuNext":
                 nav.scroll($element, "Next");
-                evt.preventDefault();
                 break;
             case "menuPrev":
                 nav.scroll($element, "Prev");
-                evt.preventDefault();
                 break;
             default:
-                evt.preventDefault();
                 break;
         }
     });
     $("div#option a.menuOption").live('click', function(evt) {
         // Bugged selector?
-        var left, size, option = $(this).text();
+        var option = $(this).text();
         
+        evt.preventDefault();
         switch (option) {
-            case "Next Page":
-                left = $("#source").scrollLeft();
-                size = $("#source").innerWidth();
-                $("#source").scrollLeft(left + size);
-                evt.preventDefault();
-            break;
-            case "Prev Page":
-                left = $("#source").scrollLeft();
-                size = $("#source").innerWidth();
-                size = -size;
-                $("#source").scrollLeft(left + size);
-                evt.preventDefault();
-            break;
             case "Full View":
-                //toggle
+                // Add: toggle
                 $("div#main").css("height", "auto");
 
                 $("div#scroll_left").removeClass("show");
@@ -88,8 +73,9 @@
 
                 $("div#source").removeClass("col");
             break;
+            case "Notes":
+            break;
             default:
-                evt.preventDefault();
             break;
         }
     });
@@ -98,6 +84,7 @@
         left = $("#source").scrollLeft();
         size = $("#source").innerWidth();
         evt.preventDefault();
+        
         switch (option) {
             case "<":
                 size = -size;
@@ -143,7 +130,7 @@
                 dataType: format,
                 timeout: setting.timeout,
                 success: function(data) { menu.build(data); },
-                error: function() { menu.build(); /*get.rss(settings.alt);*/ return; } // Avoid loops on GitHub
+                error: function() { menu.build(); /*get.rss(settings.alt);*/ } // Build anyway, avoid loops on GitHub
             });
         },
         html: function(setting) {
@@ -159,11 +146,9 @@
         },
         other: function(setting) {
             $.ajax({
-                // Credits http://icant.co.uk/articles/crossdomain-ajax-with-jquery/error-handling.html
                 type: "GET",
                 url: "http://query.yahooapis.com/v1/public/yql",
                 data: "q=select%20*%20from%20html%20where%20url%3D%22" + encodeURIComponent(setting)+ "%22&format=json&callback=?",
-                // Yahoo! Query Language: select * from html where url="" & format=xml
                 dataType: 'json',
                 success: function(data) { reader.display(data); }
             });
@@ -179,15 +164,15 @@
             $this.scrollLeft(0); // Reset view
             $this.html(data);
             
+            // Remove whitespaces
             $this.contents().html(function() {
                 var content = $(this).html();
                 return $.trim(content);
-            }); // Remove whitespaces
+            }); 
             $("#source p:empty").remove(); // Clean empty Paragraphs
             
             // Style dates
             $("h1, p:first").next("p").filter(':contains("January"),:contains("February"),:contains("March"),:contains("April"),:contains("May"),:contains("June"),:contains("July"),:contains("August"),:contains("September"),:contains("October"),:contains("November"),:contains("December")')
-            //      .removeClass("fontText").addClass("fontMenu size09 sizeB");
                     .each(function () {
                         var content = $(this).html();
                         $(this).wrap($("<h3>").addClass("fontMenu"))
@@ -199,7 +184,7 @@
         },
         parse: function(data) {
             var $parse = $(data.results[0]).find('td[width="455"], td[width="375"]'); 
-            // 121. 113. ... Missing "Related" -^ 2nd table width="455"
+            // 121. 113. ... Missing "Related:" -^ 2nd table width="455"
             // 58. 44. 40. ... content bugged 
             // 55. header bugged
             // 34. parse error table width="375"
@@ -207,12 +192,11 @@
             // 16. 15. 13. bugged td bgcolor="#FFFFDD" table width="410"
             // 104. td bgcolor="#cccc99 2xtable bugged
             // essay image header bugged
-            // local links (no http://) are broken
 
             // Avoiding virtumundo.com Loading times, Open rate tracker?
             $parse.find('img[src*="http://www.virtumundo.com/"]').remove();
             
-            // Image to H1 Title
+            // Convert image titles to H1
             // <img hspace="0" height="18" width="126" vspace="0" border="0" alt="*" src="http://ep.yimg.com/ca/I/paulgraham*">
             $parse.find('img[src*="http://ep.yimg.com/ca/I/paulgraham"]').each(function () {
                 var content = $(this).attr('alt');
@@ -251,7 +235,8 @@
                 );
             });
             
-            // YC #ff9922 //Etherpad #cccc99
+            // YC #ff9922 
+            // Etherpad #cccc99
             $parse.find('table[width*="100%"]').wrap($("<p>").addClass("info fontText size11"));
             var style = $parse.find('table[width*="100%"] td').attr('bgcolor');
 
@@ -309,9 +294,10 @@
         display: function(data) {
             var $this = $("#source");
             $this.scrollLeft(0); // Reset view
-
-            //data = data.results[0];
-            //var parse = data.replace(/<body>|<\/body>|<p>|<\/p>/g, '');
+            
+            // Different format:
+            // data = data.results[0];
+            // var parse = data.replace(/<body>|<\/body>|<p>|<\/p>/g, '');
             data = data.query.results.body.p;
             
             // .txt formatting bugged
@@ -370,13 +356,10 @@
                     var xmlLink = $(xmlItem).find("link").text();
                     $("div#list .menuList").append(
                         menu.add({
-                            _class: "menuItem fontMenu size09 sizeB",
-                            html: xmlTitle, //item.index + ". " + item.title,
-                            href: xmlLink,
-                            title: "" //item.title
+                            _class: "menuItem fontMenu size09 sizeB", html: xmlTitle,
+                            href: xmlLink, title: ""
                         })
                     );
-                        //= menu.list($list, {title: , link: });
                 });
             }
             
@@ -436,10 +419,8 @@
                     html: "Full View", href: "#", title: ""
                 })
             );
-            // Full view
-            // 
-            // Page next prev
-            // Notes
+            // Add: Full view
+            // Add: Notes
         }
     }
 
@@ -456,7 +437,7 @@
         },
         scroll: function($element, dir) {
             // menuList scrolling
-            var menuVisible = $element.innerHeight(); // / 2;
+            var menuVisible = $element.innerHeight();
             var menuSize = parseInt($element.data('itemCount') / (menuVisible / $element.data('itemSize')), 10);
             var menuOffset = $element.data('itemOffset') ? $element.data('itemOffset') : 0;
 
