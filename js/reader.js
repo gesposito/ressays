@@ -8,44 +8,43 @@
         // Display home content
         $("iframe#loader").hide();
         
-        $("div#home").addClass("show");
+        $("#home").addClass("show");
 
-        $("div#menu_left").addClass("show");
-        $("div#menu_right").addClass("show");
+        $("#menuLeft").addClass("show");
+        $("#menuRight").addClass("show");
         
-        $("div#scroll_left").addClass("size70 center").html("&#8249;");
-        $("div#scroll_right").addClass("size70 center").html("&#8250;");
+        $("#scrollLeft").addClass("size70 center").html("&#8249;");
+        $("#scrollRight").addClass("size70 center").html("&#8250;");
         
         // Reset view, Reload bug on FF?
-        $("div#source").scrollLeft(0); 
+        $("#source").scrollLeft(0); 
         
         // Menu builder
         get.xml(settings.rss);
         menu.option();
     });
     
-    $("div#scroll_left, div#scroll_right").live('click', function(evt) {
+    $("#scrollLeft, #scrollRight").live('click', function(evt) {
         evt.preventDefault();
         
-        var left = $("div#source").scrollLeft(), size = $("div#source").innerWidth(), $this = $(this).attr("id"); 
+        var left = $("#source").scrollLeft(), size = $("#source").innerWidth(), $this = $(this).attr("id"); 
         var option = ($this.indexOf("left") != -1) ? "<" : ">";
         
         switch (option) {
             case "<":
                 size = -size;
-                $("div#source").scrollLeft(left + size);
+                $("#source").scrollLeft(left + size);
             break;
             case ">":
-                $("div#source").scrollLeft(left + size);
+                $("#source").scrollLeft(left + size);
             break;
             default:
             break;
         }
     });
-    $("div#source a.noteLink").live("mouseover mouseout", function(evt) {
+    $("#source a.noteLink").live("mouseover mouseout", function(evt) {
         // Incomplete
         /*if ( evt.type == "mouseover" ) {
-            console.log("note")
             var number = $(this).text;
             reader.note(number, evt.pageX, evt.pageY);
         } else {
@@ -107,7 +106,7 @@
         build: function(data) {      
             data = reader.parse(data);
             
-            var $this = $("div#source");
+            var $this = $("#source");
             $this.scrollLeft(0); // Reset view
             $this.html(data);
             
@@ -116,14 +115,13 @@
                 var content = $(this).html();
                 return $.trim(content);
             }); 
-            $("div#source p:empty").remove(); // Clean empty Paragraphs
+            $("#source p:empty").remove(); // Clean empty Paragraphs
             
             // Style dates
             $("h1, p:first").next("p").filter(':contains("January"),:contains("February"),:contains("March"),:contains("April"),:contains("May"),:contains("June"),:contains("July"),:contains("August"),:contains("September"),:contains("October"),:contains("November"),:contains("December")')
                     .each(function() {
                         var content = $(this).html();
-                        $(this).wrap($("<h3>").addClass("fontMenu"))
-                                .replaceWith(content);
+                        $(this).wrap($("<h3>")).replaceWith(content);
                     });
 
             reader.spinner('off');
@@ -147,8 +145,7 @@
             // <img hspace="0" height="18" width="126" vspace="0" border="0" alt="*" src="http://ep.yimg.com/ca/I/paulgraham*">
             $parse.find('img[src*="http://ep.yimg.com/ca/I/paulgraham"]').each(function() {
                 var content = $(this).attr('alt');
-                $(this).wrap($("<h1>").addClass("fontMenu"))
-                        .replaceWith(content);
+                $(this).wrap($("<h1>")).replaceWith(content);
             });
 
             // Unwrap Paragraphs
@@ -184,7 +181,7 @@
             
             // YC #ff9922 
             // Etherpad #cccc99
-            $parse.find('table[width*="100%"]').wrap($("<p>").addClass("info fontText size11"));
+            $parse.find('table[width*="100%"]').wrap($("<p>").addClass("info size11"));
             var style = $parse.find('table[width*="100%"] td').attr('bgcolor');
 
             switch (style) {
@@ -212,8 +209,7 @@
             // Strong to H2
             $parse.find('strong').each(function() {
                 var content = $(this).html();
-                $(this).wrap($("<h2>").addClass("fontMenu"))
-                        .replaceWith(content);
+                $(this).wrap($("<h2>")).replaceWith(content);
             });
             $parse.find('h2').before("<br>").after("<br>"); // Fixes <h2> wrapping in <p>
             
@@ -232,14 +228,14 @@
             var i = 0;
             do {
                 i++;
-                parse = i%2 ? parse.replace(regExp, '<p class="fontText">') : parse.replace(regExp, '</p>');
-                search = parse.search(regExp);
+                parse = i%2 ? parse.replace(regExp, '<p>') : parse.replace(regExp, '</p>');
+                var search = parse.search(regExp);
             } while (search != -1)
 
             return parse;
         },
         display: function(data) {
-            var $this = $("div#source");
+            var $this = $("#source");
             $this.scrollLeft(0); // Reset view
             
             // Different format:
@@ -248,11 +244,11 @@
             data = data.query.results.body.p;
             
             // .txt formatting bugged
-            $this.html($("<p>").addClass("fontText").html(data));
+            $this.html($("<p>").html(data));
             reader.spinner('off');
         },
         paginate: function() {
-            var $this = $("div#source");
+            var $this = $("#source");
 
             $this.removeClass("col");
             var totalHeight = $this.height(); // Bugged on first build?
@@ -267,7 +263,7 @@
             if (toggle == "on") {
                 $("body").append($("<div>", {id: "spinner"}));
             } else {
-                $("body").children("div#spinner").fadeOut().remove();
+                $("body").children("#spinner").fadeOut().remove();
             }
         },
         note: function(note) {
@@ -277,7 +273,7 @@
                 var $note = $("h2:contains(Notes)");
                 $note = $note.nextUntil("p:contains('(3)')");
                 var noteText = $note.html();
-                $("body").append($("<div>", {id: "note", "class": "fontText", html: noteText}));
+                $("body").append($("<div>", {id: "note", "class": "", html: noteText}));
             } else {
                 $("body").children("#note").fadeOut().remove();
             }*/
@@ -290,13 +286,13 @@
         list: function(data) {
             $("ul.menuPrev").append(
                 menu.add({
-                    _class: "menuNav fontMenu size09 sizeB",
+                    _class: "menuHead size09 sizeB",
                     html: "Essays: ", href: "#", title: "", handler: "menuPrev"
                 })
             );
             $("ul.menuNext").append(
                 menu.add({
-                    _class: "menuNav fontMenu size09 sizeB",
+                    _class: "menuNav size09 sizeB",
                     html: "Older", href: "#", title: "", handler: "menuNext"
                 })
             );
@@ -308,7 +304,7 @@
                     var xmlLink = $(xmlItem).find("link").text();
                     $("ol.menuList").append(
                         menu.add({
-                            _class: "menuItem fontMenu size09 sizeB", html: xmlTitle,
+                            _class: "menuItem size09 sizeB", html: xmlTitle,
                             href: xmlLink, title: "", handler: "openLink"
                         })
                     );
@@ -321,27 +317,28 @@
         },
         option: function() {
             // Bugged selector/event
-            $("ul.menuSetting").append(
+            $("ul.menuMore").append(
                 menu.add({
-                    _class: "menuOption fontMenu size09 sizeB",
+                    _class: "menuHead size09 sizeB",
                     html: "Settings: ", href: "#", title: ""
                 })
             );
-            $("ul.menuSetting").append(
+            $("ul.menuSett").append(
                 menu.add({
-                    _class: "menuOption fontMenu size09 sizeB",
+                    _class: "menuOption size09 sizeB",
                     html: "Full View", href: "#", title: "", handler: "fullView"
                 })
             );
 
             /*$("ul.menuSetting").append(
                 menu.add({
-                    _class: "menuOption fontMenu size09 sizeB",
+                    _class: "menuOption size09 sizeB",
                     html: "Show Notes", href: "#", title: "", handler: "showNotes"
                 })
             );*/
             // Add: Full view
             // Add: Notes
+            // Fonts
         },
         add: function(element) {
             if (element) {
@@ -380,6 +377,7 @@
                     nav.scroll("Next");
                     break;
                 case "openLink":
+                    reader.spinner('on');
                     nav.link(evt.data.link);
                     break;
                 case "fullView":
@@ -428,8 +426,7 @@
             $element.scrollTop(menuOffset * menuVisible);
         },
         link: function(url) {
-            $("div#home").removeClass("show");
-            reader.spinner('on');
+            $("#home").removeClass("show");
 
             if (url.search(/htm/i) != -1) {
                 get.html(url);
@@ -438,25 +435,22 @@
                 get.other(url);
             }
 
-            $("div#scroll_left").addClass("show");
-            $("div#scroll_right").addClass("show");
-            $("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression
+            $("#scrollLeft").addClass("show");
+            $("#scrollRight").addClass("show");
+            //$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Disabled, scripts conflict?
         },
         full: function() {
             // Bugged selector?
             // Add: toggle
-            $("div#main").css("height", "auto");
-            $("div#reader").css("height", "auto");
-            $("div#source").removeClass("col");
+            $("#main").css("height", "auto");
+            $("#reader").css("height", "auto");
+            $("#source").removeClass("col");
             
-            $("div#scroll_left").removeClass("show");
-            $("div#scroll_right").removeClass("show");
-
-            console.log("full")
+            $("#scrollLeft").removeClass("show");
+            $("#scrollRight").removeClass("show");
         },
         note: function() {
             // incomplete
-            console.log("notes")
         }
     }
     
@@ -472,10 +466,9 @@
             data: "",
             format: "xml",
             timeout: 1 *1000
-        },
-        
-        target: {
-            $menu: $("div#list")
         }
+    }
+    var target = {
+        $menu: $("#list")
     }
 })( jQuery );

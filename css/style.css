@@ -4,14 +4,14 @@
  */
 #main { margin:0 auto; width:56em; height:64em; }
 
-#menu_left, #menu_right { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
-#menu_left.show, #menu_right.show { visibility:visible; }
-#menu_left:hover, #menu_right:hover { z-index:1; overflow:visible; }
-#menu_left { margin-left:4em; }
-#menu_right { margin-right:4em; }
+#menuLeft, #menuRight { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
+#menuLeft.show, #menuRight.show { visibility:visible; }
+#menuLeft:hover, #menuRight:hover { z-index:1; overflow:visible; }
+#menuLeft { margin-left:4em; }
+#menuRight { margin-right:4em; }
 
-#scroll_left, #scroll_right { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
-#scroll_left.show, #scroll_right.show { visibility:visible; cursor:pointer; }
+#scrollLeft, #scrollRight { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
+#scrollLeft.show, #scrollRight.show { visibility:visible; cursor:pointer; }
 
 #reader { position:relative; width:48em; height:62em; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
 #reader:before { position:absolute; top:0; right:0; bottom:0; left:0;
@@ -39,30 +39,30 @@
 #spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
 #note { position:fixed; top:25%; left:25%; min-width:10em; min-height:10em; padding:1em; background-color:#FFF; }
 
-#list, #option { position:relative; } /* background-color: #EAEAEA; */
-#list .menuHome, #list .menuNext, #list .menuPrev, #option menuSetting { position:relative; width:24em; height:2em; float:left; clear:both; }
-#list .menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
+#list, #more { position:relative; } /* background-color: #EAEAEA; */
+#list ul, #list ol, #more ul { position:relative; width:24em; height:2em; float:left; clear:both; overflow:hidden; }
+#list ol.menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
 /* #list .menuList li { list-style: decimal inside none; }*/ 
 #list li { position:relative; width:24em; height:2em; background-color:#666699; }
-#list .menuList li:hover { width:auto; z-index:1; overflow:visible; }
-#list .menuHome li, #list .menuNext li, #list .menuPrev li, #option li { background-color:#666777; }
+#list ol.menuList li:hover { width:auto; z-index:1; overflow:visible; }
+#list .menuNav li, #list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
 
-#list li a:link, #list li a:visited,
-#option li a:link, #option li a:visited
+#list a:link, #list a:visited,
+#more a:link, #more a:visited
 { display:block; width:23em; height:1.2em; padding:0.5em 1em;
   color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
-#list li a.menuNav:link, #list li a.menuNav:visited { width:24em; }
-#list li a:hover, #list li a:active
+#list a:hover, #list a:active
 { display:block; width:auto; padding-right:1em; }
-#list li a:link:before, #list li a:visited:before, #list li a:hover:before, #list li a:active:before,
-#option li a:link:before, #option li a:visited:before, #option li a:hover:before, #option li a:active:before
+#list a:link:before, #list a:visited:before, #list a:hover:before, #list a:active:before,
+#more a:link:before, #more a:visited:before, #more a:hover:before, #more a:active:before
 { position:absolute; top:0; right:0; bottom:0; left:0;
   content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
 
-.fontMenu { font-family:'Metrophobic', serif; font-style:normal; text-shadow:none;
-  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; }
-/* Bugged on IE */
+#home p, #source p, 
 .fontText { font-family:'Merriweather', serif; font-style:normal; text-shadow:none;
+  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; } /* Bugged on IE */
+#home h1, #source h1, #home h2, #source h2, #home h3, #source h3, #list a, #more a,
+.fontMenu { font-family:'Metrophobic', serif; font-style:normal; text-shadow:none;
   text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; }
 .size09 { font-size:0.9em; line-height:1.2em; }
 .size11 { font-size:1.1em; line-height:1.6em; }
