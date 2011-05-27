@@ -13,8 +13,8 @@
         $("#menuLeft").addClass("show");
         $("#menuRight").addClass("show");
         
-        $("#scrollLeft").addClass("size70 center").html("&#8249;");
-        $("#scrollRight").addClass("size70 center").html("&#8250;");
+        $("#scrollLeft").addClass("size70 right").html("&#8249;");
+        $("#scrollRight").addClass("size70 left").html("&#8250;");
         
         // Reset view, Reload bug on FF?
         $("#source").scrollLeft(0); 
@@ -28,7 +28,7 @@
         evt.preventDefault();
         
         var left = $("#source").scrollLeft(), size = $("#source").innerWidth(), $this = $(this).attr("id"); 
-        var option = ($this.indexOf("left") != -1) ? "<" : ">";
+        var option = ($this.indexOf("Left") != -1) ? "<" : ">";
         
         switch (option) {
             case "<":
@@ -56,6 +56,7 @@
     // Cross-Origin Resource Sharing workarounds
     var get = {
         xml: function(setting) {
+            // check success with empty return
             $.ajax({
                 type: "GET",
                 url: "http://query.yahooapis.com/v1/public/yql",
@@ -316,7 +317,6 @@
             $("ol.menuList").scrollTop(0); // Reset view
         },
         option: function() {
-            // Bugged selector/event
             $("ul.menuMore").append(
                 menu.add({
                     _class: "menuHead size09 sizeB",
@@ -440,7 +440,6 @@
             //$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Disabled, scripts conflict?
         },
         full: function() {
-            // Bugged selector?
             // Add: toggle
             $("#main").css("height", "auto");
             $("#reader").css("height", "auto");
