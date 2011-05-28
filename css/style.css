@@ -7,6 +7,9 @@
 #scrollLeft, #scrollRight { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
 #scrollLeft.show, #scrollRight.show { visibility:visible; cursor:pointer; }
 
+#home { visibility:hidden; }
+#home.show { visibility:visible; }
+
 #reader { position:relative; width:48em; height:62em; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
 #reader:before { position:absolute; top:0; right:0; bottom:0; left:0;
   content: ""; border:1px solid #EAEAEA; z-index: -1; }
@@ -27,9 +30,6 @@
 #source a, #home a { color:darkblue; }
 #source a.noteLink, #source a.noteText { vertical-align:super; }
 
-#home { visibility:hidden; }
-#home.show { visibility:visible; }
-
 #spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
 #note { position:fixed; top:25%; left:25%; min-width:10em; min-height:10em; padding:1em; background-color:#FFF; }
 
@@ -40,7 +40,7 @@
 #menuRight { margin-right:4em; }
 
 #list, #more { position:relative; } /* background-color: #EAEAEA; */
-#list ul, #list ol, #more ul { position:relative; width:auto; height:2em; float:left; clear:both; overflow:hidden; }
+#list ul, #list ol, #more ul { position:relative; min-width:24em; height:2em; float:left; clear:both; overflow:hidden; }
 #list ol.menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
 
 /* #list .menuList li { list-style: decimal inside none; }*/ 
