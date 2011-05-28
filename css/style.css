@@ -4,12 +4,6 @@
  */
 #main { margin:0 auto; width:56em; height:64em; }
 
-#menuLeft, #menuRight { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
-#menuLeft.show, #menuRight.show { visibility:visible; }
-#menuLeft:hover, #menuRight:hover { z-index:1; overflow:visible; }
-#menuLeft { margin-left:4em; }
-#menuRight { margin-right:4em; }
-
 #scrollLeft, #scrollRight { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
 #scrollLeft.show, #scrollRight.show { visibility:visible; cursor:pointer; }
 
@@ -39,13 +33,20 @@
 #spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
 #note { position:fixed; top:25%; left:25%; min-width:10em; min-height:10em; padding:1em; background-color:#FFF; }
 
+#menuLeft, #menuRight { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
+#menuLeft.show, #menuRight.show { visibility:visible; }
+#menuLeft:hover, #menuRight:hover { z-index:1; overflow:visible; }
+#menuLeft { margin-left:4em; }
+#menuRight { margin-right:4em; }
+
 #list, #more { position:relative; } /* background-color: #EAEAEA; */
-#list ul, #list ol, #more ul { position:relative; width:24em; height:2em; float:left; clear:both; overflow:hidden; }
+#list ul, #list ol, #more ul { position:relative; width:auto; height:2em; float:left; clear:both; overflow:hidden; }
 #list ol.menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
+
 /* #list .menuList li { list-style: decimal inside none; }*/ 
 #list li { position:relative; width:24em; height:2em; background-color:#666699; }
 #list ol.menuList li:hover { width:auto; z-index:1; overflow:visible; }
-#list .menuNav li, #list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
+#list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
 
 #list a:link, #list a:visited,
 #more a:link, #more a:visited

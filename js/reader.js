@@ -226,12 +226,12 @@
             // Font > Break, Font to Paragraph
             // <br>|<br/> Come at pairs, <font size="2" face="verdana"></font>, <font face="verdana" size="2"></font>
             var regExp = /<font[^>]*>|<br>|<\/font>/;
-            var i = 0;
-            do {
+            var search = 1, i = 0;
+            while (search != -1) {
                 i++;
                 parse = i%2 ? parse.replace(regExp, '<p>') : parse.replace(regExp, '</p>');
-                var search = parse.search(regExp);
-            } while (search != -1)
+                search = parse.search(regExp);
+            }
 
             return parse;
         },
@@ -450,6 +450,7 @@
         },
         note: function() {
             // incomplete
+            return;
         }
     }
     
@@ -468,6 +469,7 @@
         }
     }
     var target = {
+        $frame: $("iframe#loader"),
         $menu: $("#list")
     }
 })( jQuery );
