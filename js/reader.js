@@ -1,6 +1,5 @@
 /* 
  * Gianluca Esposito tilt2k@gmail.com
- * If you find this tool useful please donate at the address above, it'll help to start a start-up!
  */
 (function($){
     // jQuery events
