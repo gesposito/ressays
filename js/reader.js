@@ -4,43 +4,62 @@
 (function($){
     // jQuery events
     $().ready(function() {
-        // Display home content
-        $("iframe#loader").hide();
-        
-        $("#home").addClass("show");
-
-        $("#menuLeft").addClass("show");
-        $("#menuRight").addClass("show");
-        
-        $("#scrollLeft").addClass("size70 right").html("&#8249;");
-        $("#scrollRight").addClass("size70 left").html("&#8250;");
-        
-        // Reset view, Reload bug on FF?
+		
+        // Reset view
         $("#source").scrollLeft(0); 
         
         // Menu builder
-        get.xml(settings.rss);
+        var menuData = get.rss( settings.rss );
+		menu.list( menuData );
         menu.option();
+		
+		// Jump to page
+		var url = location.hash;
+		if (url) {
+			$("home").removeClass("show");
+			reader.spinner('on');
+			url = url.replace(/#/, 'http://www.paulgraham.com/')
+			nav.link(url);
+		}
+		
+        // Display Scroll content
+        $("#scrollLeft").html("&#8249;");
+        $("#scrollRight").html("&#8250;");
     });
     
+	// Page Scroller
     $("#scrollLeft, #scrollRight").live('click', function(evt) {
         evt.preventDefault();
-        
-        var left = $("#source").scrollLeft(), size = $("#source").innerWidth(), $this = $(this).attr("id"); 
-        var option = ($this.indexOf("Left") != -1) ? "<" : ">";
+
+		var $source = $("#source");
+		
+        var left = $source.scrollLeft();
+		var size = $source.innerWidth();
+		
+		var count = $source.data('count');
+		var pages = $source.data('pages');
+		
+		var option = $(this).hasClass("left") ? "left" : "right";
         
         switch (option) {
-            case "<":
+            case "left":
                 size = -size;
-                $("#source").scrollLeft(left + size);
+                $source.scrollLeft(left + size);
+				$source.data('count', --count)
             break;
-            case ">":
-                $("#source").scrollLeft(left + size);
+            case "right":
+                $source.scrollLeft(left + size);
+				$source.data('count', ++count)
             break;
             default:
             break;
         }
+		
+		// Update Scroll arrows
+		count <= 1 ? $("#scrollLeft").removeClass("show") : $("#scrollLeft").addClass("show");
+		count < pages ? $("#scrollRight").addClass("show") : $("#scrollRight").removeClass("show");
     });
+	
     $("#source a.noteLink").live("mouseover mouseout", function(evt) {
         // Incomplete
         /*if ( evt.type == "mouseover" ) {
@@ -51,35 +70,41 @@
         }*/
         return;
     });
+	
+    $("#source a.noteLink").live("click", function(evt) {
+        evt.preventDefault();
+    });
     
     // Cross-Origin Resource Sharing workarounds
     var get = {
-        xml: function(setting) {
-            // check success with empty return
+		// RSS Feed
+        rss: function(setting) {
+            return data = 
             $.ajax({
                 type: "GET",
                 url: "http://query.yahooapis.com/v1/public/yql",
                 data: "q=select%20*%20from%20rss%20where%20url%3D%22" + encodeURIComponent(setting.url) + "%22",
+				// Yahoo! Query Language: select * from rss where url=""
                 dataType: setting.format,
                 timeout: setting.timeout,
-                success: function(data) { menu.list(data); },
-                error: function() { get.rss(settings.alt); } // Fallback to local stored feed
-            });
+                error: function() { get.alt(settings.alt); }, // Fallback to local cached feed
+				async: false
+            }).responseXML;
         },
-        rss: function(setting, format) {
+        alt: function(setting) {
             $.ajax({
                 type: "GET",
                 url: setting.url,
                 data: setting.data,
-                dataType: format,
+                dataType: setting.format,
                 timeout: setting.timeout,
                 success: function(data) { menu.list(data); },
                 error: function() { menu.list(); /*get.rss(settings.alt);*/ } // Build anyway, avoid loops on GitHub
             });
         },
+		// Articles
         html: function(setting) {
             $.ajax({
-                // Credits http://icant.co.uk/articles/crossdomain-ajax-with-jquery/error-handling.html
                 type: "GET",
                 url: "http://query.yahooapis.com/v1/public/yql",
                 data: "q=select%20table%20from%20html%20where%20url%3D%22" + encodeURIComponent(setting) + "%22&format=xml&callback=?",
@@ -139,7 +164,7 @@
             // essay image header bugged
 
             // Avoiding virtumundo.com Loading times, Open rate tracker?
-            $parse.find('img[src*="http://www.virtumundo.com/"]').remove();
+            $parse.find('img[src*="virtumundo.com"]').remove();
             
             // Convert image titles to H1
             // <img hspace="0" height="18" width="126" vspace="0" border="0" alt="*" src="http://ep.yimg.com/ca/I/paulgraham*">
@@ -181,7 +206,7 @@
             
             // YC #ff9922 
             // Etherpad #cccc99
-            $parse.find('table[width*="100%"]').wrap($("<p>").addClass("info size11"));
+            $parse.find('table[width*="100%"]').wrap($("<p>").addClass("info size17"));
             var style = $parse.find('table[width*="100%"] td').attr('bgcolor');
 
             switch (style) {
@@ -237,7 +262,7 @@
         display: function(data) {
             var $this = $("#source");
             $this.scrollLeft(0); // Reset view
-            
+			
             // Different format:
             // data = data.results[0];
             // var parse = data.replace(/<body>|<\/body>|<p>|<\/p>/g, '');
@@ -257,13 +282,19 @@
             var height = $this.height();
             
             var pages = Math.ceil(totalHeight / height);
+			
+			$("#scrollRight").addClass("show");
+			$("#scrollLeft").removeClass("show"); // Reset Scroll
             $this.data('pages', pages);
+			$this.data('count', 1)
         },
         spinner: function(toggle) {
             if (toggle == "on") {
                 $("body").append($("<div>", {id: "spinner"}));
+				$("#source").css("opacity", "0.4");
             } else {
                 $("body").children("#spinner").fadeOut().remove();
+				$("#source").css("opacity", "1");
             }
         },
         note: function(note) {
@@ -283,16 +314,17 @@
     
     // #list builder
     var menu = {
+		
         list: function(data) {
             $("ul.menuPrev").append(
                 menu.add({
-                    _class: "menuHead size09 sizeB",
+                    _class: "menuHead size14 sizeB",
                     html: "Essays: ", href: "#", title: "", handler: "menuPrev"
                 })
             );
             $("ul.menuNext").append(
                 menu.add({
-                    _class: "menuNav size09 sizeB",
+                    _class: "menuNav size14 sizeB",
                     html: "Older", href: "#", title: "", handler: "menuNext"
                 })
             );
@@ -304,7 +336,7 @@
                     var xmlLink = $(xmlItem).find("link").text();
                     $("ol.menuList").append(
                         menu.add({
-                            _class: "menuItem size09 sizeB", html: xmlTitle,
+                            _class: "menuItem size14 sizeB", html: xmlTitle,
                             href: xmlLink, title: "", handler: "openLink"
                         })
                     );
@@ -318,20 +350,20 @@
         option: function() {
             $("ul.menuMore").append(
                 menu.add({
-                    _class: "menuHead size09 sizeB",
+                    _class: "menuHead size14 sizeB",
                     html: "Settings: ", href: "#", title: ""
                 })
             );
             $("ul.menuSett").append(
                 menu.add({
-                    _class: "menuOption size09 sizeB",
+                    _class: "menuOption size14 sizeB",
                     html: "Full View", href: "#", title: "", handler: "fullView"
                 })
             );
 
             /*$("ul.menuSetting").append(
                 menu.add({
-                    _class: "menuOption size09 sizeB",
+                    _class: "menuOption size14 sizeB",
                     html: "Show Notes", href: "#", title: "", handler: "showNotes"
                 })
             );*/
@@ -428,24 +460,29 @@
             $("#home").removeClass("show");
 
             if (url.search(/htm/i) != -1) {
-                get.html(url);
+                get.html(url); // Html pages
             } else {
                 url = url.replace(/http:\/\/www.paulgraham.com\//, ''); // Fixes RSS feed
-                get.other(url);
+                get.other(url); // Text and other pages
             }
+			
+			url = url.replace(/http:\/\/www.paulgraham.com\//, '');
+			location.hash = url;
 
-            $("#scrollLeft").addClass("show");
-            $("#scrollRight").addClass("show");
-            //$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Disabled, scripts conflict?
+            //$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Removed
         },
         full: function() {
-            // Add: toggle
-            $("#main").css("height", "auto");
-            $("#reader").css("height", "auto");
-            $("#source").removeClass("col");
-            
-            $("#scrollLeft").removeClass("show");
-            $("#scrollRight").removeClass("show");
+			if ( $("#source").hasClass("col") ) { 
+				// Go to full
+				$("#source").removeClass("col");
+				$("#reader").css("height", "auto");
+				$("#scrollLeft").removeClass("show");
+				$("#scrollRight").removeClass("show");
+			} else { 
+				$("#source").addClass("col");
+				$("#scrollLeft").addClass("show");
+				$("#scrollRight").addClass("show");
+			}
         },
         note: function() {
             // incomplete
@@ -466,9 +503,5 @@
             format: "xml",
             timeout: 1 *1000
         }
-    }
-    var target = {
-        $frame: $("iframe#loader"),
-        $menu: $("#list")
     }
 })( jQuery );

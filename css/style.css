@@ -1,71 +1,79 @@
 /* 
  * Gianluca Esposito tilt2k@gmail.com
  */
-#main { margin:0 auto; width:56em; height:64em; }
+body { font-size:16px; font-family:'Merriweather', serif; }
+	#main { margin:0 auto; width:768px; height:1024px; position: relative; }
 
-#scrollLeft, #scrollRight { position:relative; width:64px; height:992px; float:left; overflow:hidden; visibility:hidden; }
-#scrollLeft.show, #scrollRight.show { visibility:visible; cursor:pointer; }
+		#menuLeft,
+		#menuRight { position:relative; width:384px; height:32px; float:left; overflow:hidden; }
+			#menuLeft:hover, #menuRight:hover { z-index:2; overflow:visible; }
+	
+		#scrollLeft,
+		#scrollRight { position:absolute; width:56px; height:864px; overflow:hidden; visibility:hidden; z-index:1; top: 96px; }
+		#scrollLeft { left:8px; }
+		#scrollRight { right:8px; }
+			#scrollLeft.show, #scrollRight.show { visibility:visible; cursor:pointer; }
 
-#home { visibility:hidden; }
-#home.show { visibility:visible; }
+		#home { visibility:hidden; }
+			#home.show { visibility:visible; }
 
-#reader { position:relative; width:48em; height:62em; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
-#reader:before { position:absolute; top:0; right:0; bottom:0; left:0;
-  content: ""; border:1px solid #EAEAEA; z-index: -1; }
+		#reader { position:relative; width:768px; height:992px; background-color:#F6F6F6; float:left; overflow:hidden; z-index: 0; }
+			#reader:before { position:absolute; top:0; right:0; bottom:0; left:0; content: ""; border:1px solid #EAEAEA; z-index: -1; }
 
-#source { position:relative; width:40em; min-height:54em; margin:4em; }
-#source.col { height:54em; overflow:hidden; -moz-column-width: 48em; -moz-column-gap:0; -webkit-column-width: 48em; -webkit-column-gap:0; }
-#source h1 { padding:0 0 0.5em; font-size:1.6em; font-weight:700; color:#993333; }
-#source h1 a:link, #source h1 a:visited, #source h1 a:hover, #source h1 a:active { color:#000; }
-#source h2 { padding:0.5em 0; font-size:1.2em; font-weight:700; color:#000; }
-#source h2 a:link, #source h2 a:visited, #source h2 a:hover, #source h2 a:active { color:#000; }
-#source h3 { padding:0.5em 0; font-size:1.0em; font-weight:700; color:#000; }
-#source p { padding:0.5em 0; font-size: 1.0em; line-height: 1.5em; font-weight:400; }
-#source pre p, #source em { font-size: 0.9em; line-height: 1.2em; font-weight:400; font-style:italic; padding:0.5em 0; }
-#source p.info { width:38em; padding:0.5em 1em; font-weight:400; }
-#source p.yc { background-color:#FF9922; }
-#source p.quote { background-color:#FFFFDD; }
-#source p.ext { background-color:#CCCC99; }
-#source a, #home a { color:darkblue; }
-#source a.noteLink, #source a.noteText { vertical-align:super; }
+		#source { position:relative; margin:64px; }
+			#source.col { height:864px; overflow:hidden; -moz-column-width:864px; -moz-column-gap:0; -webkit-column-width:864px; -webkit-column-gap:0; }
+				#source h1 { padding:0 0 8px; font-size:25px; font-weight:700; color:#993333; }
+				#source h1 a:link, #source h1 a:visited, #source h1 a:hover, #source h1 a:active { color:#000; }
+				#source h2 { padding:8px 0; font-size:19px; font-weight:700; color:#000; }
+				#source h2 a:link, #source h2 a:visited, #source h2 a:hover, #source h2 a:active { color:#000; }
+				#source h3 { padding:8px 0; font-weight:700; color:#000; }
+				#source p { padding:8px 0; line-height:24px; font-weight:400; text-align: justify; }
+					#source p.center { text-align:center; }
+					#source pre p, #source em { font-size:14px; line-height:21px; font-weight:400; font-style:italic; padding:8px 0; }
+					#source p.info { width:608px; padding:8px 16px; font-weight:400; }
+					#source p.yc { background-color:#FF9922; margin: 8px 0; }
+					#source p.quote { background-color:#FFFFDD; }
+					#source p.ext { background-color:#CCCC99; }
+					#source a, #home a { color:darkblue; }
+					#source a.noteLink, #source a.noteText { vertical-align:super; }
 
-#spinner { position:fixed; top:50%; left:50%; width:2em; height:2em; background:url(img/ajax-loader.gif) no-repeat center center; }
-#note { position:fixed; top:25%; left:25%; min-width:10em; min-height:10em; padding:1em; background-color:#FFF; }
+			#spinner { position:fixed; top:50%; left:50%; width:32px; height:32px; background:url(img/ajax-loader.gif) no-repeat center center; }
+			#note { position:fixed; top:25%; left:25%; min-width:160px; min-height:160px; padding:16px; background-color:#FFF; }
 
-#menuLeft, #menuRight { position:relative; width:24em; height:2em; float:left; overflow:hidden; visibility:hidden; }
-#menuLeft.show, #menuRight.show { visibility:visible; }
-#menuLeft:hover, #menuRight:hover { z-index:1; overflow:visible; }
-#menuLeft { margin-left:4em; }
-#menuRight { margin-right:4em; }
+	#list, #more { position:relative; } /* background-color: #EAEAEA; */
+	#list ul, #list ol, #more ul { position:relative; min-width:384px; height:32px; float:left; clear:both; overflow:hidden; }
+	#list ol.menuList { position:relative; height:640px; float:left; clear:both; overflow:hidden; }
 
-#list, #more { position:relative; } /* background-color: #EAEAEA; */
-#list ul, #list ol, #more ul { position:relative; min-width:24em; height:2em; float:left; clear:both; overflow:hidden; }
-#list ol.menuList { position:relative; height:40em; float:left; clear:both; overflow:hidden; }
+	/* #list .menuList li { list-style: decimal inside none; }*/ 
+	#list li { position:relative; width:384px; height:32px; background-color:#666699; }
+	#list ol.menuList li:hover { width:auto; z-index:1; overflow:visible; }
+	#list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
 
-/* #list .menuList li { list-style: decimal inside none; }*/ 
-#list li { position:relative; width:24em; height:2em; background-color:#666699; }
-#list ol.menuList li:hover { width:auto; z-index:1; overflow:visible; }
-#list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
+	#list a:link, #list a:visited,
+	#more a:link, #more a:visited
+	{ display:block; width:352px; height:18px; padding:7px 16px; color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+	#list a:hover, #list a:active
+	{ display:block; width:auto; padding-right:16px; }
+	#list a:link:before, #list a:visited:before, #list a:hover:before, #list a:active:before,
+	#more a:link:before, #more a:visited:before, #more a:hover:before, #more a:active:before
+	{ position:absolute; top:0; right:0; bottom:0; left:0; content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
 
-#list a:link, #list a:visited,
-#more a:link, #more a:visited
-{ display:block; width:23em; height:1.2em; padding:0.5em 1em;
-  color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
-#list a:hover, #list a:active
-{ display:block; width:auto; padding-right:1em; }
-#list a:link:before, #list a:visited:before, #list a:hover:before, #list a:active:before,
-#more a:link:before, #more a:visited:before, #more a:hover:before, #more a:active:before
-{ position:absolute; top:0; right:0; bottom:0; left:0;
-  content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
+	#home h1, 
+	#source h1, 
+	#home h2, 
+	#source h2, 
+	#home h3, 
+	#source h3, 
+	#list a, 
+	#more a 
+	{ font-family:'Metrophobic', sans-serif; font-style:normal; text-decoration: none; }
 
-#home p, #source p, 
-.fontText { font-family:'Merriweather', serif; font-style:normal; text-shadow:none;
-  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; } /* Bugged on IE */
-#home h1, #source h1, #home h2, #source h2, #home h3, #source h3, #list a, #more a,
-.fontMenu { font-family:'Metrophobic', serif; font-style:normal; text-shadow:none;
-  text-decoration:none; text-transform:none; letter-spacing:0em; word-spacing:0em; }
-.size09 { font-size:0.9em; line-height:1.2em; }
-.size11 { font-size:1.1em; line-height:1.6em; }
-.size70 { font-size:7em; line-height:8em; color:#C4C4C4; }
-.sizeB { font-weight:700; }
-.center { text-align:center; } .right { text-align:right; } .left { text-align:left; }
+	.size14 { font-size:14px; line-height:19px; }
+	.size17 { font-size:17px; line-height:25px; }
+	.size112 { font-family:'serif'; font-size:112px; line-height: 864px; color:#E6E6E6; }
+		.size112:hover { color:#C4C4C4; }
+	.sizeB { font-weight:700; }
+
+	.center { text-align:center; } 
+	.right { text-align:right; } 
+	.left { text-align:left; }
