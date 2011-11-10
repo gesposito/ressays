@@ -12,22 +12,21 @@ body { font-size:16px; font-family:'Merriweather', serif; }
 			div#menuHome { width: 48px; }
 			
 			div#menuEssay { width: 382px; }
-				#menuEssay .menuEssay { padding: 7px 16px 7px 48px; background: transparent url('../css/img/library.png') no-repeat 16px 9px; }
-			#menuEssay ul, 
-			#menuEssay ol { width: 382px; }
+				#menuEssay ul, 
+				#menuEssay ol { width: 382px; }
+					#menuEssay a.menuEssay { padding: 7px 16px 7px 48px; background: transparent url('../css/img/library.png') no-repeat 16px 8px; }
 				div.menu .menuList { position:relative; height:640px; float:left; clear:both; overflow:hidden; }
-					div.menu .menuList li { position:relative; height:32px; background-color:#FFF; }
-						div.menu .menuList li { border: 1px solid #BEBEBE; border-style: none solid; }
+					div.menu .menuList li { position:relative; height:32px; background-color:#FFF; border: 1px solid #BEBEBE; border-style: none solid; }
 						div.menu .menuList li:hover { width:auto; z-index:1; overflow:visible; background-color: #EFF3FB; }
 
 			div#menuMore { width: 128px; float: right; visibility: hidden; }
 				#menuMore.show { visibility: visible; }
 				#menuMore li { width: 128px; }
-					#menuMore .menuHead { padding: 7px 16px 7px 48px; background: transparent url('../css/img/settings.png') no-repeat 16px 9px; }
-					#menuMore .menuOption { padding: 7px 16px 7px 48px; background: transparent url('../css/img/full.png') no-repeat 16px 9px; } 
+					#menuMore .menuHead { padding: 7px 16px 7px 48px; background: transparent url('../css/img/settings.png') no-repeat 16px 8px; }
+					#menuMore .menuOption { padding: 7px 16px 7px 48px; background: transparent url('../css/img/full.png') no-repeat 16px 8px; } 
 					#menuMore .menuOption.less { background: transparent url('../css/img/full_less.png') no-repeat 16px 9px; }
-			#menuEssay:hover, 
-			#menuMore:hover { z-index:2; overflow:visible; }
+				#menuEssay:hover, 
+				#menuMore:hover { z-index:2; overflow:visible; }
 
 					div.menu a:link, div.menu a:visited
 					{ display:block; height:18px; padding:7px 16px; color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
