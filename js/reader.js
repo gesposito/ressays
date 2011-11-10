@@ -465,7 +465,7 @@
 			//$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Removed
 		},
 		full: function() {
-			$source = $("#source");
+			var $source = $("#source");
 			if ( $source.hasClass("col") ) { 
 				// Go to full
 				$source.removeClass("col");
