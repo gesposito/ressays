@@ -318,8 +318,8 @@
         list: function(data) {
             $("ul.menuPrev").append(
                 menu.add({
-                    _class: "menuHead size14 sizeB",
-                    html: "Essays: ", href: "#", title: "", handler: "menuPrev"
+                    _class: "menuHead menuEssay size14 sizeB",
+                    html: "Essays ", href: "#", title: "", handler: "menuPrev"
                 })
             );
             $("ul.menuNext").append(
@@ -351,7 +351,7 @@
             $("ul.menuMore").append(
                 menu.add({
                     _class: "menuHead size14 sizeB",
-                    html: "Settings: ", href: "#", title: ""
+                    html: "Settings ", href: "#", title: ""
                 })
             );
             $("ul.menuSett").append(
@@ -441,7 +441,7 @@
 
             if (dir == "Next") {
                 if (++menuOffset < menuSize) {
-                    $("ul.menuPrev a").html("Newer");
+                    $("ul.menuPrev a").removeClass("menuEssay").html("Newer");
                     $element.data('itemOffset', menuOffset);
                 } else {
                     $("ul.menuNext li a").html("");
@@ -451,13 +451,14 @@
                     $("ul.menuNext a").text("Older");
                     $element.data('itemOffset', menuOffset);
                 } else {
-                    $("ul.menuPrev a").text("Essays: ");
+                    $("ul.menuPrev a").addClass("menuEssay").text("Essays ");
                 }
             }
             $element.scrollTop(menuOffset * menuVisible);
         },
         link: function(url) {
             $("#home").removeClass("show");
+			$("#menuMore").addClass("show");
 
             if (url.search(/htm/i) != -1) {
                 get.html(url); // Html pages
@@ -472,16 +473,23 @@
             //$("iframe#loader").attr('src', url); // Load paulgraham.com to hit impression // Removed
         },
         full: function() {
-			if ( $("#source").hasClass("col") ) { 
+			$source = $("#source");
+			if ( $source.hasClass("col") ) { 
 				// Go to full
-				$("#source").removeClass("col");
+				$source.removeClass("col");
+				$(".menuOption").addClass("less");
+				
 				$("#reader").css("height", "auto");
 				$("#scrollLeft").removeClass("show");
 				$("#scrollRight").removeClass("show");
 			} else { 
-				$("#source").addClass("col");
-				$("#scrollLeft").addClass("show");
-				$("#scrollRight").addClass("show");
+				$source.addClass("col");
+				$(".menuOption").removeClass("less");
+				
+				var count = $source.data('count');
+				var pages = $source.data('pages');
+				if (count > 1) $("#scrollLeft").addClass("show");
+				if (count < pages) $("#scrollRight").addClass("show");
 			}
         },
         note: function() {

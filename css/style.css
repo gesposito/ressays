@@ -4,10 +4,40 @@
 body { font-size:16px; font-family:'Merriweather', serif; }
 	#main { margin:0 auto; width:768px; height:1024px; position: relative; }
 
-		#menuLeft,
-		#menuRight { position:relative; width:384px; height:32px; float:left; overflow:hidden; }
-			#menuLeft:hover, #menuRight:hover { z-index:2; overflow:visible; }
-	
+		#menuBar { width: 768px; height: 32px; background-color:#2D2D2D; }
+			
+			div.menu { float:left; position:relative; height:32px; overflow:hidden; }
+				div.menu ul, div.menu ol { position:relative; height:32px; float:left; clear:both; overflow:hidden; background-color:#2D2D2D; }
+
+			div#menuHome { width: 48px; }
+			
+			div#menuEssay { width: 382px; }
+				#menuEssay .menuEssay { padding: 7px 16px 7px 48px; background: transparent url('../css/img/library.png') no-repeat 16px 9px; }
+			#menuEssay ul, 
+			#menuEssay ol { width: 382px; }
+				div.menu .menuList { position:relative; height:640px; float:left; clear:both; overflow:hidden; }
+					div.menu .menuList li { position:relative; height:32px; background-color:#FFF; }
+						div.menu .menuList li { border: 1px solid #BEBEBE; border-style: none solid; }
+						div.menu .menuList li:hover { width:auto; z-index:1; overflow:visible; background-color: #EFF3FB; }
+
+			div#menuMore { width: 128px; float: right; visibility: hidden; }
+				#menuMore.show { visibility: visible; }
+				#menuMore li { width: 128px; }
+					#menuMore .menuHead { padding: 7px 16px 7px 48px; background: transparent url('../css/img/settings.png') no-repeat 16px 9px; }
+					#menuMore .menuOption { padding: 7px 16px 7px 48px; background: transparent url('../css/img/full.png') no-repeat 16px 9px; } 
+					#menuMore .menuOption.less { background: transparent url('../css/img/full_less.png') no-repeat 16px 9px; }
+			#menuEssay:hover, 
+			#menuMore:hover { z-index:2; overflow:visible; }
+
+					div.menu a:link, div.menu a:visited
+					{ display:block; height:18px; padding:7px 16px; color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+					div.menu .menuEssay a:hover, div.menu .menuEssay a:active
+					{ display:block; width:auto; padding-right:16px; }
+
+					div.menu .menuList a:link, div.menu .menuList a:visited,
+					div.menu .menuList a:hover, div.menu .menuList a:active 
+					{ font-weight: normal; color:#36C; }
+
 		#scrollLeft,
 		#scrollRight { position:absolute; width:56px; height:864px; overflow:hidden; visibility:hidden; z-index:1; top: 96px; }
 		#scrollLeft { left:8px; }
@@ -40,32 +70,8 @@ body { font-size:16px; font-family:'Merriweather', serif; }
 			#spinner { position:fixed; top:50%; left:50%; width:32px; height:32px; background:url(img/ajax-loader.gif) no-repeat center center; }
 			#note { position:fixed; top:25%; left:25%; min-width:160px; min-height:160px; padding:16px; background-color:#FFF; }
 
-	#list, #more { position:relative; } /* background-color: #EAEAEA; */
-	#list ul, #list ol, #more ul { position:relative; min-width:384px; height:32px; float:left; clear:both; overflow:hidden; }
-	#list ol.menuList { position:relative; height:640px; float:left; clear:both; overflow:hidden; }
-
-	/* #list .menuList li { list-style: decimal inside none; }*/ 
-	#list li { position:relative; width:384px; height:32px; background-color:#666699; }
-	#list ol.menuList li:hover { width:auto; z-index:1; overflow:visible; }
-	#list .menuNext li, #list .menuPrev li, #more li { background-color:#666777; }
-
-	#list a:link, #list a:visited,
-	#more a:link, #more a:visited
-	{ display:block; width:352px; height:18px; padding:7px 16px; color:#FFF; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
-	#list a:hover, #list a:active
-	{ display:block; width:auto; padding-right:16px; }
-	#list a:link:before, #list a:visited:before, #list a:hover:before, #list a:active:before,
-	#more a:link:before, #more a:visited:before, #more a:hover:before, #more a:active:before
-	{ position:absolute; top:0; right:0; bottom:0; left:0; content: ''; border:1px solid #C4C4C4; border-bottom:1px solid #000; }
-
-	#home h1, 
-	#source h1, 
-	#home h2, 
-	#source h2, 
-	#home h3, 
-	#source h3, 
-	#list a, 
-	#more a 
+	h1, h2, h3, 
+	div.menu a
 	{ font-family:'Metrophobic', sans-serif; font-style:normal; text-decoration: none; }
 
 	.size14 { font-size:14px; line-height:19px; }
