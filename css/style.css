@@ -70,16 +70,16 @@ body { font-size:16px; font-family:'Merriweather', serif; }
 			#spinner { position:fixed; top:50%; left:50%; width:32px; height:32px; background:url(img/ajax-loader.gif) no-repeat center center; }
 			#note { position:fixed; top:25%; left:25%; min-width:160px; min-height:160px; padding:16px; background-color:#FFF; }
 
-	h1, h2, h3, 
-	div.menu a
-	{ font-family:'Metrophobic', sans-serif; font-style:normal; text-decoration: none; }
+		h1, h2, h3, 
+		div.menu a
+		{ font-family:'Metrophobic', sans-serif; font-style:normal; text-decoration: none; }
 
-	.size14 { font-size:14px; line-height:19px; }
-	.size17 { font-size:17px; line-height:25px; }
-	.size112 { font-family:'serif'; font-size:112px; line-height: 864px; color:#E6E6E6; }
-		.size112:hover { color:#C4C4C4; }
-	.sizeB { font-weight:700; }
+		.size14 { font-size:14px; line-height:19px; }
+		.size17 { font-size:17px; line-height:25px; }
+		.size112 { font-family:'serif'; font-size:112px; line-height: 864px; color:#E6E6E6; }
+			.size112:hover { color:#C4C4C4; }
+		.sizeB { font-weight:700; }
 
-	.center { text-align:center; } 
-	.right { text-align:right; } 
-	.left { text-align:left; }
+		.center { text-align:center; } 
+		.right { text-align:right; } 
+		.left { text-align:left; }
